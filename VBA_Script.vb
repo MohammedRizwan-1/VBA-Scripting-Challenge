@@ -31,6 +31,52 @@
             
             '1.3 Define Number of Rows
                 LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+            For  i = 2 To LastRow
+
+                'Check if on same Stock Ticker, If not then
+                If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1) Then
+                
+                
+                'Set Ticker Value and Print It in Column
+                    Ticker = ws.Cells(i, 1).Value
+                    ws.Range("J" & Summary_Table_Row).Value = Ticker
+                
+                'Add to Stock Volume and Print it in Column
+                    Stock_Volume = Stock_Volume + ws.Cells(i, 7).Value
+                    ws.Range("M" & Summary_Table_Row).Value = Stock_Volume
+                
+                'Yearly Change
+                    YR_Change = ws.Cells(i, 6).Value - ws.Cells(Start_Row, 3)
+                    ws.Range("K" & Summary_Table_Row).Value = YR_Change
+
+                'Formatting Cell Colours 
+                    If ws.Range("K"& Summary_Table_Row).Value >=0 Then
+                        ws.Range("K"& Summary_Table_Row).Interior.ColorIndex = 4
+                    ElseIf ws.Range("K"& Summary_Table_Row).Value <=0 Then
+                        ws.Range("K"& Summary_Table_Row).Interior.ColorIndex = 3
+                    End If
+                'Set Percetage Change Values and Print it in Column
+                    Percentage_Change = YR_Change / ws.Cells(Start_Row, 3)
+                    
+                    ws.Range("L" & Summary_Table_Row).Value = Percentage_Change
+                    ws.Range("L" & Summary_Table_Row).NumberFormat = "0.00%"
+
+
+                'Increase Summary Table Row by 1
+                    Summary_Table_Row = Summary_Table_Row + 1
+                
+                'Reset Stock Volume
+                    Stock_Volume = 0
+                
+                    Start_Row = (i + 1)
+
+                'If Cell following Row is the same ticker symbol then
+                Else
+                    ' Add To Stock Volume
+                    Stock_Volume = Stock_Volume + ws.Cells(i, 7).Value
+                End If
+
         Next ws
 End Sub
         
