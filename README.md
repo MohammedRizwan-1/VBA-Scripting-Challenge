@@ -1,7 +1,7 @@
 # VBA-Scripting-Challenge
 * Using VBA Language to Analyse and Present Data to the User.
 
-## The Task 
+## The Objective 
 To create a VBA script which when ran analyses stock data. This script will then present data to the user in specified areas of the worksheet.
 
 ## Acceptance Criteria
